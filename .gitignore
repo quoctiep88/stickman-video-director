@@ -6,3 +6,6 @@ node_modules/
 __pycache__/
 *.pyc
 autopilot-work/
+
+# QTx local productions (media, checkpoints, caches and private inputs)
+/productions/
