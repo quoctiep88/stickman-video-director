@@ -21,3 +21,12 @@ For a runtime question, read only its entry point or selected style reference.
 Do not duplicate the style catalog. Obtain user plan/script approval before production;
 preserve upstream preview/approval/render ownership. Technical tests are not creative
 approval or permission for paid generation.
+
+For QTx Unity production, follow docs/qtx/PRODUCTION-MVP.md and use qtx/produce.mjs.
+Author plan.md, exact spoken script.md and visual-plan.md; stop for explicit human
+approval before recording approve-plan or making provider calls. Check fingerprints,
+reuse matching outputs and never automatically retry a paid call. Actual narration
+timing drives scenes and captions. Inspect the encoded preview and stop again for
+explicit human approval before approve-preview/render. Changes invalidate approval.
+Use only current-Series shared references; other-Series fixtures require local import
+and explicit P02 promotion, preserving the source. No global asset library.

@@ -1,7 +1,8 @@
 # QTx Series production workflow
 
 P02 wraps upstream production with local files. Product code lives in `qtx/`;
-production content stays in ignored `productions/`. No provider calls are automated.
+production content stays in ignored `productions/`. P02 itself calls no providers;
+P05 adds the separately gated [production MVP](PRODUCTION-MVP.md) commands.
 
 ## Layout and metadata
 

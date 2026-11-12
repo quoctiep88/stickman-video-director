@@ -121,4 +121,7 @@ captions, audio production, procedural camera, Unity Timeline authoring, physics
 providers, UI, backend, database, workers or cloud rendering.
 P04 now adds deliberately scoped semantic actors/actions and authored contact modules
 alongside this unchanged low-level object contract; see [animation engine](ANIMATION-ENGINE.md).
-P05 production integration has not begun.
+P05 production integration uses `qtx/produce.mjs`; see [production MVP](PRODUCTION-MVP.md).
+The Node `frames(manifest, maxFrames)` optional prefix limit preserves original cue
+durations/tracks and captures only the requested opening frames. Default full renders
+are unchanged; no C# or character architecture changes were needed.
