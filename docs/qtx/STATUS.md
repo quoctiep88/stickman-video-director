@@ -1,6 +1,6 @@
 # QTx status
 
-- **N01 text benchmark ready for human review.** Use the [natural narration skill](../../skills/qtx-natural-narration/SKILL.md) for future drafts. The [P05 comparison](narration/p05-benchmark.md) links the full experiment. No benchmark audio generated.
+- **N02 Natural Delivery v1 prepared.** N01 listening favored B. The [B2 audit and test sequence](narration/n02-delivery.md) and [exact contextual input](narration/n02-b2.json) await approval for one B2 generation. No N02 provider calls.
 
 - **P05 CLOSED PASS — first QTx production MVP complete.** P00–P04 remain closed. No post-MVP phase authorized.
 - Phase starting SHA: fb75826e6c0b1fa0f02d750ae1305be564d1b40e. Main; QTx origin https://github.com/quoctiep88/stickman-video-director.git. Commits: 64aee5c planning, 6e81611 production CLI, 9217565 real preview, followed by closure docs. Resolve final SHA and remote equality with git rev-parse HEAD / origin/main.

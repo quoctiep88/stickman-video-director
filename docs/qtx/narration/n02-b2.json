@@ -1,0 +1,10 @@
+{
+  "voice_id": "DODLEQrClDo8wCz460ld",
+  "output_format": "mp3_44100_128",
+  "body": {
+    "model_id": "eleven_multilingual_v2",
+    "text": "You tap your weather app. A moment later, tomorrow's forecast appears. Where did it come from?\n\nYour app asked another system for the forecast. That's an API request. An app can request an action that way, too.\n\nThink of a labeled service counter. The sign tells you where to go and what details to give. For your app, the API sets those rules, right down to what kind of answer comes back.",
+    "next_text": "For our forecast, the request identifies a location and a day. It travels across the network to a server.",
+    "apply_text_normalization": "off"
+  }
+}

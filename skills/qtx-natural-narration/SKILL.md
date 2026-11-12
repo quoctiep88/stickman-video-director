@@ -9,7 +9,7 @@ Draft from the listener's immediate experience. Keep track of who does what, wha
 
 ## Read-aloud pass
 
-Before presenting a draft for approval, read each beat at conversational pace. Where would you breathe? Does the punctuation put the pause there? Listen for the word that gets the stress and whether it carries the idea. Would someone actually say this sentence? If several lines land on the same cadence, vary the phrasing. Read the last line into the next beat. Does the speaker have a reason to go there? Rewrite the stumble, read it again, then check the facts against the source.
+Before presenting a draft for approval, read each beat at conversational pace. Where would you breathe? Does the punctuation put the pause there? Listen for the word that gets the stress and whether it carries the idea. Would someone actually say this sentence? If several lines land on the same cadence, vary the phrasing. Read the last line into the next beat. Does the speaker have a reason to go there? Listen for accidental grammatical echoes such as "asking X ... asking Y." Name the actors when an abstract phrase hides who asks, who acts or what comes back. Rewrite the stumble, read it again, then check the facts against the source.
 
 Prepare the exact words for approval using the [delivery guidance](references/elevenlabs-delivery.md). A writing review authorizes no generation.
 
