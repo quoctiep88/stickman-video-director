@@ -1,12 +1,10 @@
 # QTx status
 
-- Phase: **P00 — Fork, Baseline & Project Contract; PARTIAL**. Documentation/local fork established; baseline checks are not green. P01 has not begun.
-- Upstream baseline and starting local SHA: `105b134f80fa11abe7a012f713712d39f20936f3`.
-- Current reviewed P00 local SHA: `24c63446b9d3386d38bbab840e8b637ea6d0bbb4` (`docs: establish QTx P00 upstream baseline and project contract`). The final handoff-only commit follows this SHA; resolve its exact current SHA with `git rev-parse HEAD` (a file cannot contain its own commit hash).
-- Repository: canonical `D:\Programing\vibecode2026\qtx-video-director`, branch `main`, full upstream history. `upstream=https://github.com/kaomei/stickman-video-director.git`; origin absent, push not attempted because `gh auth status` reports no authenticated hosts. Preserve local LF checkout configuration.
-- Environment: Node 22.14.0, npm 10.9.2, Python 3.12.3; locked Canvas/Sharp installed; bundled fonts pass. FFmpeg/FFprobe absent from PATH; Windows symlink privileges missing. Gemini key absent; external providers untested.
-- Verification: Node 128/200 pass, 71 fail, one skip; A6 references pass, Python unit 19/20 pass; nine root Python checks pass, four fail. See [BASELINE](BASELINE.md) for commands and prerequisite vs upstream failure classification.
-- Verified 11 styles: A1 Classic Black & White; A2 Modern Pop; A3 Prehistoric Cave; A4 Cozy Storytelling; A5 Historical Cartoon; A6 Amber Noir; B1 Minimal Line Art; B2 Colorful Hand-Drawn; B3 Retro TV; B4 Survival Thriller; B5 Character Explainer. A1/A2 variants and reference links: [UPSTREAM](UPSTREAM.md).
-- Entry points: `skills/directing-stickman-videos/SKILL.md`, `references/autopilot.md`, `references/autopilot-runtime.md`, `scripts/autopilot.mjs`, `scripts/character-explainer.mjs`, `scripts/a6_finish.py` (paths after SKILL are within the skill).
-- Limitations: missing local media tools/symlink privileges; B5 Windows path comparison; stale roadmap assertions; voice test assumes origin/main; no provider-backed or visual/audio parity verification. No QTx functionality or upstream behavior changes.
-- Next phase only: **P01 — Upstream Full Parity**, when requested, resolve and verify upstream runtime/workflow parity before QTx extensions.
+- Phase: **P00 — Fork, Baseline & Project Contract; closure checks complete, commit/push pending**. P01 has not begun.
+- Baseline: `105b134f80fa11abe7a012f713712d39f20936f3`; retry starting SHA: `34d8dca69cafe1ec9dfc2bd6adbc3660c88b91e5`. Resolve final handoff SHA with `git rev-parse HEAD`.
+- Canonical checkout: `D:\Programing\vibecode2026\qtx-video-director`; branch `main`; upstream ancestry preserved; `core.autocrlf=false`.
+- Remotes: `origin=https://github.com/quoctiep88/stickman-video-director.git` (fetched); `upstream=https://github.com/kaomei/stickman-video-director.git`. Push pending post-closure commit.
+- Environment: Node 22.14.0, npm 10.9.2, Python 3.12.3; FFmpeg/FFprobe 9.0.2 installed by winget and resolved using persisted PATH in fresh test processes. Doctor's seven local checks pass. Symlink privilege absent; external services unverified.
+- Baseline: Node **192/200 pass, 8 fail, 0 skip**; Python **19/20 pass, 1 error**; root Python verification **10/13 pass, 3 fail**; three A6 references pass. All remaining failures classified as UPSTREAM_WINDOWS, ENVIRONMENT or STALE_UPSTREAM_TEST_OR_DOC; none introduced by QTx. See [BASELINE](BASELINE.md).
+- QTx delta remains documentation/project-contract plus productions ignore rule only. No runtime, test, reference or approved asset changes; no full production parity claim.
+- Style inventory and entry points: [UPSTREAM](UPSTREAM.md). Next phase only on request: **P01 — Upstream Full Parity**.
