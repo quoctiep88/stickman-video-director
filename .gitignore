@@ -9,3 +9,10 @@ autopilot-work/
 
 # QTx local productions (media, checkpoints, caches and private inputs)
 /productions/
+
+// Unity generated state
+/qtx/unity/QTxVideoDirector/[Ll]ibrary/
+/qtx/unity/QTxVideoDirector/[Tt]emp/
+/qtx/unity/QTxVideoDirector/[Ll]ogs/
+/qtx/unity/QTxVideoDirector/[Oo]bj/
+/qtx/unity/QTxVideoDirector/UserSettings/
