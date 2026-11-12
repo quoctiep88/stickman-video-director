@@ -21,7 +21,10 @@ with tempfile.TemporaryDirectory(prefix='a6-finish-test-') as name:
     subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i',
                     'sine=frequency=440:duration=2', '-c:a', 'aac',
                     str(tmp / 'mix.m4a')], check=True)
+    # Explicit fixture typography only; this does not substitute production fonts.
+    fixture_font = root / 'skills/directing-stickman-videos/assets/fonts/NotoSans.ttf'
     cfg = {'picture': 'picture.mp4', 'audio': 'mix.m4a', 'script': 'Go go now.',
+           'caption_font': str(fixture_font), 'title_font': str(fixture_font),
            'title': ['WHAT IF', 'TIME STOPPED?'],
            'cues': [{'start': 0, 'end': 2, 'text': 'GO GO NOW.'}],
            'words': [{'start': 0, 'end': .5, 'word': 'Go'},
@@ -51,7 +54,7 @@ with tempfile.TemporaryDirectory(prefix='a6-finish-test-') as name:
         raise AssertionError('Missing narration accepted')
     config.write_text(json.dumps(cfg))
     # Repeated GO must highlight one positional token, not both occurrences.
-    font = Path('/System/Library/Fonts/Supplemental/Impact.ttf')
+    font = fixture_font
     first = module.caption_layer('GO GO NOW.', 0, 360, 640, font)
     second = module.caption_layer('GO GO NOW.', 1, 360, 640, font)
     amber1 = {x for x in range(360) for y in range(first.height)
