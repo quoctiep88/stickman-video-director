@@ -249,8 +249,21 @@ export function doctor() {
     ffprobe: run("ffprobe", ["-version"]).split("\n")[0],
   };
 }
-export function frames(manifest) {
-  const job = validate(manifest),
+// Prefix capture changes frame counts only, preserving authored cue/track timing.
+export function prefixJob(job, maxFrames = job.totalFrames) {
+  check(Number.isSafeInteger(maxFrames) && maxFrames > 0 && maxFrames <= job.totalFrames, 'Invalid preview frame limit');
+  let remaining = maxFrames;
+  const scenes = [];
+  for (const scene of job.scenes) {
+    if (!remaining) break;
+    const count = Math.min(remaining, scene.frames);
+    scenes.push({...scene, frames: count});
+    remaining -= count;
+  }
+  return {...job, scenes, totalFrames: maxFrames};
+}
+export function frames(manifest, maxFrames) {
+  const job = prefixJob(validate(manifest), maxFrames),
     editor = unity(),
     output = path.join(path.dirname(job.manifest), "output/unity");
   fs.mkdirSync(output, { recursive: true });
