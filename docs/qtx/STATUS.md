@@ -1,10 +1,10 @@
 # QTx status
 
-- Phase: **P00 — Fork, Baseline & Project Contract; PASS**. P01 has not begun.
-- Baseline: `105b134f80fa11abe7a012f713712d39f20936f3`; retry starting SHA: `34d8dca69cafe1ec9dfc2bd6adbc3660c88b91e5`. Resolve final handoff SHA with `git rev-parse HEAD`.
-- Canonical checkout: `D:\Programing\vibecode2026\qtx-video-director`; branch `main`; upstream ancestry preserved; `core.autocrlf=false`.
-- Remotes: `origin=https://github.com/quoctiep88/stickman-video-director.git` (fetched); `upstream=https://github.com/kaomei/stickman-video-director.git`. Closure commit `2a5db87` pushed successfully with `git push -u origin main`; branch tracks `origin/main`. Final handoff records that result.
-- Environment: Node 22.14.0, npm 10.9.2, Python 3.12.3; FFmpeg/FFprobe 9.0.2 installed by winget and resolved using persisted PATH in fresh test processes. Doctor's seven local checks pass. Symlink privilege absent; external services unverified.
-- Baseline: Node **192/200 pass, 8 fail, 0 skip**; Python **19/20 pass, 1 error**; root Python verification **10/13 pass, 3 fail**; three A6 references pass. All remaining failures classified as UPSTREAM_WINDOWS, ENVIRONMENT or STALE_UPSTREAM_TEST_OR_DOC; none introduced by QTx. See [BASELINE](BASELINE.md).
-- QTx delta remains documentation/project-contract plus productions ignore rule only. No runtime, test, reference or approved asset changes; no full production parity claim.
-- Style inventory and entry points: [UPSTREAM](UPSTREAM.md). Next phase only on request: **P01 — Upstream Full Parity**.
+- Phase: **P01 — Upstream Full Parity; PARTIAL, awaiting B1 preview approval**. P02 not begun.
+- Upstream/P00 baseline: `105b134f80fa11abe7a012f713712d39f20936f3`; P01 starting QTx SHA: `79e06cf8258b09458b51ac5dd8b6948ce4da8bb7`; Windows fix commit: `bef33b1`. Resolve handoff candidate with `git rev-parse HEAD`.
+- Branch `main`, canonical checkout unchanged; origin is `https://github.com/quoctiep88/stickman-video-director.git`; upstream preserved; `core.autocrlf=false`. No upstream merge during P01.
+- Evidence: [PARITY](PARITY.md), [acceptance results](acceptance/P01-RESULTS.md), [approved Director prompts](acceptance/P01-DIRECTOR-PROMPTS.md). Node 197/200 pass; Python 19/20 pass; root checks 11/13 pass; A6 references/finishing and B5 four-frame smoke pass. Remaining test failures: symlink privilege and two stale upstream README checks; no demonstrated QTx regression.
+- B1: 33.33s local spoken narration, synthetic word timing and bed, eight shots; validate and 20s preview pass. Review `productions/p01/b1/output/preview.mp4`. Actual preview approval requested in chat and not yet received. Do not run approve/full production until received. Director proposal already explicitly approved; three prompts written.
+- Remaining P01: approve current B1 preview; render full film; rerun for cache reuse; mutate a disposable approval-sensitive input, confirm rejection and restore exact valid bytes; record evidence, close/commit/push. Existing upstream gate/cache tests already pass, but do not replace this production decision.
+- Limitations: external generation untested/unneeded for local acceptance; deterministic captions not forced alignment; no physical listening claimed; B3 private source absent; B5 portrait pending upstream; A6 prescribed fonts require explicit available paths/approved substitute. No approved upstream assets changed, no paid calls or large models downloaded.
+- Next phase only after P01 closure and user request: **P02 — QTx Series Production Workflow**.
