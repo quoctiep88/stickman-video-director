@@ -2,7 +2,7 @@
 
 - Phase: **P00 — Fork, Baseline & Project Contract; PARTIAL**. Documentation/local fork established; baseline checks are not green. P01 has not begun.
 - Upstream baseline and starting local SHA: `105b134f80fa11abe7a012f713712d39f20936f3`.
-- Current reviewed local SHA: baseline above until the P00 documentation commit; resolve the live checkout with `git rev-parse HEAD`. A committed file cannot contain its own commit hash.
+- Current reviewed P00 local SHA: `24c63446b9d3386d38bbab840e8b637ea6d0bbb4` (`docs: establish QTx P00 upstream baseline and project contract`). The final handoff-only commit follows this SHA; resolve its exact current SHA with `git rev-parse HEAD` (a file cannot contain its own commit hash).
 - Repository: canonical `D:\Programing\vibecode2026\qtx-video-director`, branch `main`, full upstream history. `upstream=https://github.com/kaomei/stickman-video-director.git`; origin absent, push not attempted because `gh auth status` reports no authenticated hosts. Preserve local LF checkout configuration.
 - Environment: Node 22.14.0, npm 10.9.2, Python 3.12.3; locked Canvas/Sharp installed; bundled fonts pass. FFmpeg/FFprobe absent from PATH; Windows symlink privileges missing. Gemini key absent; external providers untested.
 - Verification: Node 128/200 pass, 71 fail, one skip; A6 references pass, Python unit 19/20 pass; nine root Python checks pass, four fail. See [BASELINE](BASELINE.md) for commands and prerequisite vs upstream failure classification.
