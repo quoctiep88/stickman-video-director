@@ -14,6 +14,10 @@ public static class SemanticAnimationTests {
   var shot=new Shot{duration=8,actors=new[]{a},actions=new[]{walk,point},interactions=new[]{hold},objects=new[]{new Item{id="cpu",x=new[]{new Key{time=0,value=8}},y=new[]{new Key{time=0,value=0}}}}};
   var timeline=new SemanticTimeline(shot);
   Check(timeline.Root(a,1)==new Vector2(2,0) && timeline.Root(a,7)==new Vector2(4,0),"linear root / hold");
+  var nextWalk=new ActionCue{actor="host",action="WALK_TO",start=6,end=8,target=new float[]{0,0}};
+  shot.actions=new[]{walk,point,nextWalk};timeline=new SemanticTimeline(shot);
+  Check(timeline.Root(a,7)==new Vector2(2,0) && timeline.Evaluate(a,7).facing==-1,"chained root travel and facing");
+  shot.actions=new[]{walk,point};timeline=new SemanticTimeline(shot);
   var p=timeline.Evaluate(a,0.5);timeline.Evaluate(a,7);var repeat=timeline.Evaluate(a,0.5);
   Check(p.legLeft==repeat.legLeft && p.root==repeat.root && Math.Abs(p.legLeft)>20 && p.legLeft*p.legRight<0,"deterministic animated gait / out-of-order evaluation");
   p=timeline.Evaluate(a,3);
@@ -35,6 +39,18 @@ public static class SemanticAnimationTests {
   point.action="UNKNOWN";bool rejected=false;try{new SemanticTimeline(shot);}catch(Exception){rejected=true;}
   Check(rejected,"unknown action rejected by Unity");
   Debug.Log("QTX semantic self-tests PASS: root, gait, targets, point direction, look, contact, skin, rejection");
+ }
+ public static void CheckContacts(Shot shot,SemanticActors actors) {
+  foreach(var cue in shot.interactions) {
+   actors.Evaluate(cue.start);
+   var root=GameObject.Find(cue.actor).transform;
+   Check(!root.Find(cue.module.replace).gameObject.activeSelf,"ordinary limb hidden during contact");
+   Check(root.Cast<Transform>().Any(t=>t.name=="HOLD_CARD" && t.gameObject.activeSelf),"authored contact visible");
+   actors.Evaluate(cue.end);
+   if(!shot.interactions.Any(c=>c.actor==cue.actor && c.start<=cue.end && cue.end<c.end))
+    Check(root.Find(cue.module.replace).gameObject.activeSelf && !root.Cast<Transform>().Any(t=>t.name=="HOLD_CARD" && t.gameObject.activeSelf),"normal limb restored after contact");
+  }
+  if(shot.interactions.Length>0)Debug.Log("QTX contact rendering activation/replacement self-test PASS");
  }
 }
 }

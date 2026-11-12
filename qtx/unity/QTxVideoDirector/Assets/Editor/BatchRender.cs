@@ -63,6 +63,7 @@ public static class BatchRender {
      sr.sharedMaterial=material;renderers[i]=sr;
     }
     using(var actors=new SemanticActors(shot,material)) {
+    SemanticAnimationTests.CheckContacts(shot,actors);
     for(int local=0;local<shot.frames;local++) {
      double time=(double)local/job.fps;
      for(int i=0;i<shot.objects.Length;i++){

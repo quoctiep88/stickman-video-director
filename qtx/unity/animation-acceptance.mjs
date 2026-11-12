@@ -1,0 +1,48 @@
+// Explicit local technical acceptance; run serially with immutable shared assets.
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { render, validate, hash } from './render.mjs';
+const [manifest, p03Manifest] = process.argv.slice(2);
+assert.ok(manifest && p03Manifest, 'usage: animation-acceptance.mjs <P04 manifest> <P03 regression manifest>');
+const job = validate(manifest);
+assert.equal(job.scenes.length, 1);
+const scene = job.scenes[0].path, original = fs.readFileSync(scene);
+const frameHashes = r => Array.from({length:r.totalFrames},(_,i)=>hash(path.join(r.frameDirectory,`frame-${String(i).padStart(6,'0')}.png`)));
+const first = render(manifest), second = render(manifest);
+const a = frameHashes(first), b = frameHashes(second);
+assert.deepEqual(a,b,'every repeated frame must be identical');
+let mutation, invalidAction, missingInteraction;
+try {
+  let data = JSON.parse(original);
+  data.actions[0].action = 'UNKNOWN';
+  fs.writeFileSync(scene, JSON.stringify(data));
+  assert.throws(()=>validate(manifest),e=>{invalidAction=e.message;return /unknown action/.test(e.message);});
+  data = JSON.parse(original);
+  data.interactions[0].module = 'missing-interaction.json';
+  fs.writeFileSync(scene, JSON.stringify(data));
+  assert.throws(()=>validate(manifest),e=>{missingInteraction=e.message;return /interaction: missing/.test(e.message);});
+  data = JSON.parse(original);
+  for(const action of data.actions) if(['LOOK_AT','POINT_AT'].includes(action.action)) action.target=[3,-1];
+  fs.writeFileSync(scene,JSON.stringify(data));
+  mutation = render(manifest);
+} finally { fs.writeFileSync(scene,original); }
+const c=frameHashes(mutation), changed=c.flatMap((h,i)=>h===a[i]?[]:[i]);
+assert.ok(changed.length>0);
+assert.ok(changed.every(i=>i>=2*job.fps && i<5*job.fps),'only target-action interval changes');
+assert.equal(hash(scene),job.scenes[0].sha256);
+const p03Report=JSON.parse(fs.readFileSync(path.join(path.dirname(p03Manifest),'output/unity/render-report.json'),'utf8'));
+const regression=render(p03Manifest);
+assert.deepEqual(frameHashes(regression),frameHashes(p03Report),'P03 frames unchanged from retained baseline');
+assert.equal(regression.outputSha256,p03Report.outputSha256,'P03 MP4 unchanged');
+const output=path.dirname(path.dirname(first.output));
+fs.copyFileSync(path.join(first.frameDirectory,'render-report.json'),path.join(output,'render-report.json'));
+const selected=[0,6,18,30,48,72,108,119];
+const args=['-v','error','-y'];
+for(const i of selected)args.push('-i',path.join(first.frameDirectory,`frame-${String(i).padStart(6,'0')}.png`));
+args.push('-filter_complex','xstack=inputs=8:layout=0_0|640_0|1280_0|1920_0|0_360|640_360|1280_360|1920_360','-frames:v','1',path.join(output,'contact-sheet.png'));
+const sheet=spawnSync('ffmpeg',args,{encoding:'utf8',windowsHide:true});assert.equal(sheet.status,0,sheet.stderr);
+const evidence={result:'PASS',framesCompared:a.length,identicalFrames:true,identicalMp4:first.outputSha256===second.outputSha256,frameHashes:a,changedFrames:changed,originalRestored:true,invalidAction,missingInteraction,original:first.output,repeat:second.output,mutation:mutation.output,p03Regression:regression.output,p03Frames:regression.totalFrames,p03Identical:true,selectedFrames:selected,visualInspection:'PENDING'};
+fs.writeFileSync(path.join(output,'animation-acceptance.json'),JSON.stringify(evidence,null,2)+'\n');
+console.log(JSON.stringify({...evidence,frameHashes:undefined},null,2));
