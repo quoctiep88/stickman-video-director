@@ -18,4 +18,8 @@ Read this file, `docs/qtx/PROJECT.md`, and `docs/qtx/STATUS.md` first in every s
 - Do not begin the next phase without a user request.
 
 - Unity boundary (P03): one engine at qtx/unity/QTxVideoDirector/; episodes author unity-project.json and separate scene JSON, never replace upstream project.json. See docs/qtx/UNITY-RENDERER.md.
-- Production sprites load directly from Series/episode files at render time; do not copy them into Unity Assets. Ordinary P03 scenes use semantic JSON, not custom C#. No P04 animation modules without explicit phase authorization.
+- Production sprites load directly from Series/episode files at render time; do not copy them into Unity Assets. Ordinary scenes use JSON, not custom C#.
+- Animation boundary (P04): prefer supported semantic IDLE/WALK_TO/LOOK_AT/POINT_AT actions over raw character transforms. P03 raw objects remain valid for non-character graphics. See docs/qtx/ANIMATION-ENGINE.md.
+- Continuous deformable limbs are the primary humanoid architecture. Do not regress to rigid multipart limbs with seam patches. Contact-critical interactions use authored modules when generic composition cannot give credible contact; do not synthesize arbitrary prop contact with a generic grip-hand overlay.
+- Approved Series character/interaction packages remain Series-owned source assets; never silently regenerate or replace them. Ordinary supported action/interaction instances require JSON only; new reusable engine actions require deliberate engine work, not ad-hoc per-scene C#.
+- P04 contains exactly four generic actions and one HOLD_CARD interaction family. No P05 production orchestration without a new user request.

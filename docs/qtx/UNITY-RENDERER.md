@@ -115,9 +115,10 @@ are retained and their location is printed on failure. No automatic recovery.
 
 ## Deliberate limitations
 
-P03 has raster sprites and linear transforms only. No character rigs, SpriteSkin,
+The original P03 scope has raster sprites and linear transforms only. No character rigs, SpriteSkin,
 limbs, interactions, walking, POINT/HOLD actions, authored action modules, lip sync,
 captions, audio production, procedural camera, Unity Timeline authoring, physics,
 providers, UI, backend, database, workers or cloud rendering.
-P04 will introduce deliberately scoped reusable animation modules; P05 handles
-later production integration. Neither phase is implemented here.
+P04 now adds deliberately scoped semantic actors/actions and authored contact modules
+alongside this unchanged low-level object contract; see [animation engine](ANIMATION-ENGINE.md).
+P05 production integration has not begun.

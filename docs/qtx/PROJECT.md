@@ -10,7 +10,7 @@ The intended user journey is topic → plan/script approval → preview approval
 
 P02 architecture: upstream Director/Autopilot remains the foundation; additive `qtx/production.mjs` manages filesystem Series/Video workspaces in ignored `productions/` and promotes approved Series assets with provenance. Normal upstream manifests reference shared files by relative path; upstream retains preview/approval/render ownership. See [Series workflow](SERIES-WORKFLOW.md). ElevenLabs is a future voice integration; Unity is an additive P03 renderer (see [Unity renderer](UNITY-RENDERER.md)); FFmpeg handles media finishing. Codex orchestrates production and recovery. No web UI, database or service stack is planned for MVP.
 
-P00/P01/P02 are closed; P03 adds one deterministic Unity sprite renderer beside upstream. Later phases require a new user request. See [ROADMAP](ROADMAP.md), [STATUS](STATUS.md) and [upstream inventory](UPSTREAM.md).
+P00/P01/P02/P03 are closed. P04 adds a small semantic animation engine inside the same Unity renderer: Series character packages, continuous CPU-skinned limbs, four actions and authored HOLD_CARD contact modules alongside P03 sprite objects. See [animation engine](ANIMATION-ENGINE.md). Production assets remain Series/episode-owned; Unity evaluates deterministic poses. Later phases require a new user request. See [ROADMAP](ROADMAP.md), [STATUS](STATUS.md) and [upstream inventory](UPSTREAM.md).
 
 ## Preservation and updates
 
