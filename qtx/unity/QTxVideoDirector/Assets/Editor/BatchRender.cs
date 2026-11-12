@@ -11,7 +11,7 @@ namespace QTxVideoDirector {
  public string id, asset;
  public Key[] x,y,sx,sy,rotation,opacity,order;
 }
-[Serializable] public class Shot { public int frames; public string background; public Item[] objects; }
+[Serializable] public class Shot { public int frames; public float duration; public string background; public Item[] objects; public Actor[] actors; public ActionCue[] actions; public InteractionCue[] interactions; }
 [Serializable] public class Job { public int width,height,fps,totalFrames; public string output; public Shot[] scenes; }
 [Serializable] public class Result { public string version; }
 public static class BatchRender {
@@ -30,6 +30,7 @@ public static class BatchRender {
  public static void Run() {
   try {
    SelfTest();
+   SemanticAnimationTests.Run();
    string[] args=Environment.GetCommandLineArgs();int index=Array.IndexOf(args,"-qtxJob");
    if(index<0 || index+1>=args.Length)throw new Exception("-qtxJob required (use Node bridge)");
    var job=JsonUtility.FromJson<Job>(File.ReadAllText(args[index+1]));
@@ -61,6 +62,7 @@ public static class BatchRender {
      sr.sprite=Sprite.Create(tex,new Rect(0,0,tex.width,tex.height),new Vector2(0.5f,0.5f),100,0,SpriteMeshType.FullRect);
      sr.sharedMaterial=material;renderers[i]=sr;
     }
+    using(var actors=new SemanticActors(shot,material)) {
     for(int local=0;local<shot.frames;local++) {
      double time=(double)local/job.fps;
      for(int i=0;i<shot.objects.Length;i++){
@@ -71,9 +73,11 @@ public static class BatchRender {
       sr.color=new Color(1,1,1,Evaluate(item.opacity,time));
       sr.sortingOrder=(int)Math.Round(Evaluate(item.order,time),MidpointRounding.AwayFromZero);
      }
+     actors.Evaluate(time);
      camera.Render();RenderTexture.active=target;
      readback.ReadPixels(new Rect(0,0,job.width,job.height),0,0);readback.Apply();
      File.WriteAllBytes(Path.Combine(job.output,"frame-"+frame.ToString("D6")+".png"),readback.EncodeToPNG());frame++;
+    }
     }
     for(int i=0;i<renderers.Length;i++){UnityEngine.Object.DestroyImmediate(renderers[i].sprite);UnityEngine.Object.DestroyImmediate(renderers[i].gameObject);UnityEngine.Object.DestroyImmediate(textures[i]);}
    }

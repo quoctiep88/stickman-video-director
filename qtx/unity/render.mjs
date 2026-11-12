@@ -3,6 +3,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { semanticScene } from "./animation.mjs";
 export const project = fileURLToPath(
   new URL("./QTxVideoDirector", import.meta.url),
 );
@@ -85,6 +86,7 @@ export function validate(manifest) {
       /^#[0-9a-f]{6}$/i.test(s.background),
       relative + ": background must be #RRGGBB",
     );
+    s.objects ??= [];
     check(Array.isArray(s.objects), relative + ": objects must be array");
     const ids = new Set();
     const objects = s.objects.map((o) => {
@@ -149,6 +151,7 @@ export function validate(manifest) {
       frames: frameCount(s.duration, m.fps),
       background: s.background,
       objects,
+      ...semanticScene(s, scenePath, ids, assets),
     };
   });
   const totalFrames = scenes.reduce((n, s) => n + s.frames, 0);
