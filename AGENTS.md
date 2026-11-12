@@ -16,3 +16,6 @@ Read this file, `docs/qtx/PROJECT.md`, and `docs/qtx/STATUS.md` first in every s
 - Keep context concise: update STATUS as a handoff, not a diary; keep architecture detail in the inventory. Record evidence and limitations instead of claiming untested parity.
 - Keep secrets, generated media, caches and large production/Unity outputs out of Git; do not delete bundled upstream reference media. Preserve LF checkout bytes (`git config core.autocrlf false`) because upstream hashes text resources.
 - Do not begin the next phase without a user request.
+
+- Unity boundary (P03): one engine at qtx/unity/QTxVideoDirector/; episodes author unity-project.json and separate scene JSON, never replace upstream project.json. See docs/qtx/UNITY-RENDERER.md.
+- Production sprites load directly from Series/episode files at render time; do not copy them into Unity Assets. Ordinary P03 scenes use semantic JSON, not custom C#. No P04 animation modules without explicit phase authorization.
