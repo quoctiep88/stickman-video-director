@@ -1,6 +1,6 @@
 # P00 baseline verification — 2026-11-12
 
-**P00 closure checks satisfied locally; closure commit and push follow this record.** This is baseline accounting, not full production parity. Baseline: `105b134f80fa11abe7a012f713712d39f20936f3`; retry starting SHA: `34d8dca69cafe1ec9dfc2bd6adbc3660c88b91e5`.
+**P00 PASS under the agreed closure rule.** This is baseline accounting, not full production parity. Baseline: `105b134f80fa11abe7a012f713712d39f20936f3`; retry starting SHA: `34d8dca69cafe1ec9dfc2bd6adbc3660c88b91e5`.
 
 ## Environment and Git
 
@@ -9,7 +9,7 @@ Windows; Node 22.14.0, npm 10.9.2, Python 3.12.3. Installed Gyan.FFmpeg 9.0.2 wi
 - Branch: `main`; upstream baseline remains an ancestor; history not rewritten.
 - `origin`: `https://github.com/quoctiep88/stickman-video-director.git` (fetched successfully).
 - `upstream`: `https://github.com/kaomei/stickman-video-director.git`.
-- Local `core.autocrlf=false` retained. Push status: pending required post-closure-commit attempt; update follows the actual result.
+- Local `core.autocrlf=false` retained. Closure commit: `2a5db87` (`docs: close P00 baseline retry with classified Windows failures`). Required `git push -u origin main` succeeded via Git HTTPS, advancing the fork from `105b134` to `2a5db87` and establishing tracking. This final handoff commit records that observed result.
 
 ## Executed existing checks
 
