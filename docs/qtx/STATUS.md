@@ -1,6 +1,6 @@
 # QTx status
 
-- **Everyday AI / 001 — native B2 Scene 5 awaits human review.** Full production stopped after rejection of the Unity sample. Scoped upstream B1–B3 parity port at 54d0355, 104 regression checks pass. Eight-shot native Autopilot preview, 24.8s, 1280×720/30fps, H.264/AAC. Existing voice/art preserved, zero provider calls. [Preview evidence and review limitations](acceptance/B2-SCENE-5-RECOVERY.md).
+- **Everyday AI / 001 — B2 Scene 5 R2 awaits human artistic-parity review.** Native R1 human rejected as B2 authoring/asset-pack failure. Runtime accepted and unchanged. Two authorized simplified asset boards, nine-shot native preview, 24.8s, 1280×720/30fps H.264/AAC. Full production stopped. [R2 evidence and limitations](acceptance/B2-SCENE-5-R2.md).
 
 - **REAL VIDEO #2 — CLOSED PASS.** Computing Clearly / 002-url-to-page delivered the human-approved R1 at 1280×720/24fps, 9,764 frames and 406.833333s. Final decoded audio matches R1 sample for sample. [Final QA and SHA256](acceptance/REAL-VIDEO-002-FINAL.md). Next activity is human review of production bottlenecks.
 
