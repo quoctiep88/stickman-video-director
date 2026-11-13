@@ -1,6 +1,6 @@
 # QTx status
 
-- **Real Video #3 — Gate 1 awaits human approval.** Everyday AI / 001-ai-internet-habits, B2, English, 519 spoken words. Local package verified, fingerprint `42e7ea217a24548195094efb8dedcd9f2885c8fd74296fc76c8827c4680e91bb`. Zero production provider calls. Proposed sound sample is the mid-story timetable-to-platform sequence. See the episode visual plan for the prefix-only preview limitation.
+- **Everyday AI / 001 — native B2 Scene 5 awaits human review.** Full production stopped after rejection of the Unity sample. Scoped upstream B1–B3 parity port at 54d0355, 104 regression checks pass. Eight-shot native Autopilot preview, 24.8s, 1280×720/30fps, H.264/AAC. Existing voice/art preserved, zero provider calls. [Preview evidence and review limitations](acceptance/B2-SCENE-5-RECOVERY.md).
 
 - **REAL VIDEO #2 — CLOSED PASS.** Computing Clearly / 002-url-to-page delivered the human-approved R1 at 1280×720/24fps, 9,764 frames and 406.833333s. Final decoded audio matches R1 sample for sample. [Final QA and SHA256](acceptance/REAL-VIDEO-002-FINAL.md). Next activity is human review of production bottlenecks.
 

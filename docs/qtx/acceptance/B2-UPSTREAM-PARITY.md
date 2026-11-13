@@ -18,7 +18,7 @@ B4 typography review/acceptance, B4 caption animation, Anton, B4 body typography
 
 Native CLI validate and preview passed using the smallest two-shot B1 fixture extracted from upstream runtime.test.mjs. Synthetic 0.85s input, 11 encoded frames at 12fps, H.264/AAC, burned captions and SRT/VTT, local bulb motion, full decode pass, reference ledger/template generated. Synthetic tone represents plumbing only.
 
-Initial focused run passed 101 of 104 checks. Three fixture setups encountered Windows symlink EPERM. After junction adaptation, all three reran successfully. The run includes B1/B2/B3 reference/quality/motion, B3 runtime, existing B4 runtime/opening and QTx Series/P05 tests. No checks skipped.
+Initial focused run passed 101 of 104 checks. Three fixture setups encountered Windows symlink EPERM. After junction adaptation, all three reran successfully. The run includes B1/B2/B3 reference/quality/motion, B3 runtime, existing B4 runtime/opening and QTx Series/P05 tests. No checks skipped. Final combined rerun passed 104/104; log in productions/b2-parity-tests-final.txt.
 
 All tracked qtx files and Natural Narration skill bytes match starting HEAD. Unity was never launched. Computing Clearly outputs were not opened for rendering or modified. No provider calls.
 

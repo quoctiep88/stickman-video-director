@@ -2,6 +2,8 @@
 
 Audited at `105b134f80fa11abe7a012f713712d39f20936f3` on 2026-11-12. Paths below are relative to `skills/directing-stickman-videos/` unless stated otherwise. This is a navigation summary, not a replacement style catalog or a claim of production parity.
 
+Scoped B1–B3 reference-review/glyph parity port from ac1838dc4552baa135211379d3259bf450ad4d39 applied in 54d0355. This does not advance the full-repository reviewed baseline. See [scope and regression evidence](acceptance/B2-UPSTREAM-PARITY.md). B2 production uses native Autopilot; Unity remains an additive route.
+
 ## Structure and authority
 
 Repository root holds multilingual READMEs, MIT LICENSE, showcase `assets/`, historical `docs/superpowers/`, README maintenance `scripts/`, and static/behavioral `tests/`. The single installed skill contains `SKILL.md`, `agents/openai.yaml`, references, runtime scripts, assets/fonts, examples, tests and the npm lockfile. There is no application server or database.
