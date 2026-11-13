@@ -1,6 +1,6 @@
 # QTx status
 
-- **Everyday AI / 001 — style lock HUMAN APPROVED; R3 stopped before authoring.** Two authorized production image attempts used the approved source: Board A preserved, Board B execution lost with no output recovered. No retry under the explicit budget/stop rule. No R3 project/video, runtime changes, or voice calls. [R3 evidence](acceptance/B2-SCENE-5-R3.md). R2 composition/motion and native runtime remain accepted; its visual treatment remains rejected.
+- **Everyday AI / 001 — Scene 5 R3 awaits human artistic review.** Style lock and Board A human accepted; one explicitly authorized Board B replacement recovered the missing assets. Native B2 preview: nine shots, 24.8s, 1280×720/30fps, H.264/AAC; decode/motion checks pass. Three lifetime image attempts/two recovered outputs, zero new voice calls. Lost-attempt evidence preserved. No runtime changes/full episode/promotion. [R3 evidence and review limitations](acceptance/B2-SCENE-5-R3.md).
 
 - **REAL VIDEO #2 — CLOSED PASS.** Computing Clearly / 002-url-to-page delivered the human-approved R1 at 1280×720/24fps, 9,764 frames and 406.833333s. Final decoded audio matches R1 sample for sample. [Final QA and SHA256](acceptance/REAL-VIDEO-002-FINAL.md). Next activity is human review of production bottlenecks.
 
