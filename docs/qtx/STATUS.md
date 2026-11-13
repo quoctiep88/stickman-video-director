@@ -1,6 +1,6 @@
 # QTx status
 
-- **Everyday AI / 001 — awaiting human B2 style-lock approval.** R2 human rejected for visual treatment; improved motion/composition and native runtime accepted. One authorized six-panel style board generated, with heavier-than-target texture flagged. Visual economy concerns composition/object count while retaining handmade materiality. Production remains stopped. [Style-lock evidence](acceptance/B2-STYLE-LOCK.md).
+- **Everyday AI / 001 — style lock HUMAN APPROVED; R3 stopped before authoring.** Two authorized production image attempts used the approved source: Board A preserved, Board B execution lost with no output recovered. No retry under the explicit budget/stop rule. No R3 project/video, runtime changes, or voice calls. [R3 evidence](acceptance/B2-SCENE-5-R3.md). R2 composition/motion and native runtime remain accepted; its visual treatment remains rejected.
 
 - **REAL VIDEO #2 — CLOSED PASS.** Computing Clearly / 002-url-to-page delivered the human-approved R1 at 1280×720/24fps, 9,764 frames and 406.833333s. Final decoded audio matches R1 sample for sample. [Final QA and SHA256](acceptance/REAL-VIDEO-002-FINAL.md). Next activity is human review of production bottlenecks.
 
