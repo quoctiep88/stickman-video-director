@@ -1,6 +1,6 @@
 # QTx status
 
-- **Everyday AI / 001 — B2 Scene 5 R2 awaits human artistic-parity review.** Native R1 human rejected as B2 authoring/asset-pack failure. Runtime accepted and unchanged. Two authorized simplified asset boards, nine-shot native preview, 24.8s, 1280×720/30fps H.264/AAC. Full production stopped. [R2 evidence and limitations](acceptance/B2-SCENE-5-R2.md).
+- **Everyday AI / 001 — awaiting human B2 style-lock approval.** R2 human rejected for visual treatment; improved motion/composition and native runtime accepted. One authorized six-panel style board generated, with heavier-than-target texture flagged. Visual economy concerns composition/object count while retaining handmade materiality. Production remains stopped. [Style-lock evidence](acceptance/B2-STYLE-LOCK.md).
 
 - **REAL VIDEO #2 — CLOSED PASS.** Computing Clearly / 002-url-to-page delivered the human-approved R1 at 1280×720/24fps, 9,764 frames and 406.833333s. Final decoded audio matches R1 sample for sample. [Final QA and SHA256](acceptance/REAL-VIDEO-002-FINAL.md). Next activity is human review of production bottlenecks.
 
