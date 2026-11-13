@@ -21,7 +21,7 @@ function harness(style = 'B2') {
   const elements = new Map();
   const document = {getElementById: id => { if (!elements.has(id)) elements.set(id, new Element('div')); return elements.get(id); }, createElement: tag => new Element(tag), createTextNode: text => text, querySelectorAll: () => [], body: new Element('body')};
   const PACK = {template, evidence: {scope: {end: 2}, plan: {shots: [{id: 'shot-0', start: 0, end: 2}]}}, artifacts: [{id: 'shot-0-continuous', shot: 'shot-0', type: 'clip', url: 'file:///fixture.mp4'}], references: [{id: 'fixture-ref', kind: 'video', has_audio: true, required_comparison: true, duration: 10, url: 'file:///reference.mp4'}]};
-  const context = vm.createContext({PACK, document, structuredClone, console, alert: () => {}, confirm: () => true, Blob, URL, setTimeout});
+  const context = vm.createContext({PACK, document, structuredClone, console, alert: () => {}, confirm: () => true, Blob, URL, setTimeout, queueMicrotask});
   vm.runInContext(fs.readFileSync(new URL('./human-review-ui.js', import.meta.url), 'utf8'), context);
   return {run: code => vm.runInContext(code, context), elements};
 }
@@ -52,4 +52,32 @@ test('criteria come from template including B3, and playback cannot be inferred 
   assert.equal(h.run('Object.keys(review.shots[0].checks).length'), 8);
   assert.ok(h.run('missingFields().join("\\n")').includes('television_finish'));
   assert.equal(h.run('review.full_playback.status'), 'unknown');
+});
+
+test('explicit composers preserve prose, evidence and unknown status', () => {
+  const h = harness();
+  assert.equal(h.run(`applyToCriteria('observation', {time:1,detail:''}, ['sound'], true)`), false);
+  assert.equal(h.run(`applyToCriteria('observation', {time:1,detail:'Human supplied test detail'}, ['sound'], false)`), false);
+  assert.equal(h.run(`applyToCriteria('observation', {time:1,detail:'Human supplied test detail'}, ['sound'], true, 'other-shot-start')`), false);
+  assert.equal(h.run(`applyToCriteria('observation', {time:1,detail:'  Exact human test prose  '}, ['sound','contact_continuity'], true)`), true);
+  assert.equal(h.run(`review.shots[0].checks.sound.observations[0].detail`), '  Exact human test prose  ');
+  assert.equal(h.run(`JSON.stringify(review.shots[0].checks.sound.observations[0].evidence_ids)`), '["shot-0-continuous"]');
+  assert.equal(h.run(`review.shots[0].checks.sound.status`), 'unknown');
+  assert.equal(h.run(`applyToCriteria('comparison', {reference_id:'fixture-ref',start:2,end:4,detail:'Exact comparison'}, ['sound','contact_continuity'], false)`), false);
+  assert.equal(h.run(`applyToCriteria('comparison', {reference_id:'fixture-ref',start:2,end:4,detail:'Exact comparison'}, ['sound','contact_continuity'], true)`), true);
+  assert.equal(h.run(`JSON.stringify(review.shots[0].checks.sound.comparisons[0])`), '{"reference_id":"fixture-ref","start":2,"end":4,"detail":"Exact comparison"}');
+  assert.equal(h.run(`applyToCriteria('status', {status:'pass'}, ['sound'], false)`), false);
+  assert.equal(h.run(`review.shots[0].checks.sound.status`), 'unknown');
+  assert.equal(h.run(`applyToCriteria('status', {status:'fail'}, ['sound'], true)`), true);
+  assert.equal(h.run(`review.shots[0].checks.sound.status`), 'fail');
+});
+
+test('completion requires concrete fields and shot-local evidence', () => {
+  const h = harness();
+  h.run(`applyToCriteria('observation', {time:1,detail:'Actual test detail'}, ['sound'], true); applyToCriteria('comparison', {reference_id:'fixture-ref',start:0,end:2,detail:'Test comparison detail'}, ['sound'], true); applyToCriteria('status', {status:'pass'}, ['sound'], true); updateProgress()`);
+  assert.match(h.elements.get('shotSelect').children[0].textContent, /1\/7 complete/);
+  h.run(`review.shots[0].checks.sound.observations[0].evidence_ids.push('other-shot');updateProgress()`);
+  assert.match(h.elements.get('shotSelect').children[0].textContent, /0\/7 complete/);
+  h.run(`review.shots[0].checks.sound.observations[0].evidence_ids=['shot-0-continuous'];review.shots[0].checks.sound.observations[0].detail='PASS';updateProgress()`);
+  assert.match(h.elements.get('shotSelect').children[0].textContent, /0\/7 complete/);
 });

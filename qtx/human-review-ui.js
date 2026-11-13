@@ -60,7 +60,7 @@ function comparisons(parent, items, sound) {
         if (!c.detail.trim() || !validInterval(c.start, c.end, refs.find(r => r.id === c.reference_id)?.duration)) return alert('Write your comparison and select a valid interval first.');
         const keys = selected.filter(([, checkbox]) => checkbox.checked).map(([key]) => key);
         if (!keys.length || !confirm('I confirm this comparison truthfully applies to each selected criterion.')) return;
-        for (const key of keys) review.shots[shotIndex].checks[key].comparisons.push(structuredClone(c));
+        if (!applyToCriteria('comparison', c, keys, true)) return alert('Sound requires an audible reference.');
         drawChecks();
       });
       button(box, 'Remove comparison', () => { items.splice(i, 1); draw(); });
@@ -86,6 +86,7 @@ function playReference(id, start, end) {
 function drawChecks() {
   const parent = $('checks'); parent.replaceChildren(); const shot = shots[shotIndex];
   node('h3', `${shot.id} · ${shot.start}–${shot.end}s`, parent);
+  drawComposers(parent, shot);
   for (const [key, c] of Object.entries(review.shots[shotIndex].checks)) {
     const box = node('details', '', parent); box.id = `check-${shot.id}-${key}`; node('summary', `${key} · ${c.status}`, box);
     const status = field(box, 'Status', c, 'status', 'text', ['unknown', 'pass', 'fail', ...(review.capability.mode === 'limited' && !['typography_captions', 'timing_pacing', 'sound'].includes(key) ? ['unmet'] : [])]);
@@ -96,6 +97,74 @@ function drawChecks() {
     node('p', ['typography_captions', 'timing_pacing'].includes(key) ? 'Reference comparison optional.' : 'Reference comparison required (sound requires an audible reference).', box);
     comparisons(box, c.comparisons, key === 'sound');
   }
+}
+function applyToCriteria(kind, value, keys, confirmed, still = '') {
+  const shot = shots[shotIndex], checks = review.shots[shotIndex].checks;
+  if (!confirmed || !keys.length || keys.some(k => !checks[k])) return false;
+  let entry;
+  if (kind === 'observation') {
+    if (!value.detail.trim() || !Number.isFinite(value.time) || value.time < shot.start || value.time > shot.end) return false;
+    if (still && !PACK.artifacts.some(a => a.shot === shot.id && a.type === 'png' && a.id === still)) return false;
+    entry = {time:value.time, detail:value.detail, evidence_ids:[shot.id + '-continuous', ...(still ? [still] : [])]};
+  } else if (kind === 'comparison') {
+    const ref = videos.find(r => r.id === value.reference_id);
+    if (!value.detail.trim() || !validInterval(value.start, value.end, ref?.duration) || (keys.includes('sound') && !ref?.has_audio)) return false;
+    entry = {reference_id:value.reference_id, start:value.start, end:value.end, detail:value.detail};
+  } else if (kind !== 'status' || !['pass', 'fail'].includes(value.status)) return false;
+  for (const key of keys) {
+    if (kind === 'status') checks[key].status = value.status;
+    else checks[key][kind === 'observation' ? 'observations' : 'comparisons'].push(structuredClone(entry));
+  }
+  return true;
+}
+function drawComposers(parent, shot) {
+  const box = node('fieldset', '', parent); node('legend', 'Fast review — selected shot', box);
+  const chosen = {};
+  for (const key of Object.keys(review.shots[shotIndex].checks)) field(box, key, chosen, key, 'checkbox');
+  const keys = () => Object.keys(chosen).filter(k => chosen[k]);
+  node('h3', 'Candidate observation composer', box);
+  const observation = {time:null, detail:'', still:''};
+  const time = field(box, 'Timestamp (candidate seconds)', observation, 'time', 'number');
+  button(box, 'Use current shot playback time', () => { observation.time = shot.start + $('shotVideo').currentTime; time.value = observation.time; });
+  field(box, 'Human-written detail', observation, 'detail', 'textarea');
+  field(box, 'Optional still (continuous clip always cited)', observation, 'still', 'text', ['', ...PACK.artifacts.filter(a => a.shot === shot.id && a.type === 'png').map(a => a.id)]);
+  const apply = (kind, value, message, still) => {
+    if (!keys().length) return alert('Select applicable criteria first.');
+    if (!confirm(message)) return;
+    if (!applyToCriteria(kind, value, keys(), true, still)) return alert('Supply your own detail and valid timestamps/reference/evidence, or an explicit PASS/FAIL. Sound requires an audible video.');
+    drawChecks(); updateProgress();
+  };
+  button(box, 'Apply my observation to selected criteria', () => apply('observation', observation, 'I confirm this observation truthfully applies to all selected criteria.', observation.still));
+  node('h3', 'Reference comparison composer', box);
+  const comparison = {reference_id:'', start:null, end:null, detail:''};
+  const refSelect = field(box, 'Reference', comparison, 'reference_id', 'text', ['', ...videos.map(r => r.id)]);
+  box.addEventListener('change', () => {
+    for (const option of refSelect.children) option.disabled = !!chosen.sound && option.value && !videos.find(r => r.id === option.value)?.has_audio;
+    if (chosen.sound && comparison.reference_id && !videos.find(r => r.id === comparison.reference_id)?.has_audio) { comparison.reference_id = ''; refSelect.value = ''; }
+  });
+  const start = field(box, 'Start', comparison, 'start', 'number'), end = field(box, 'End', comparison, 'end', 'number');
+  button(box, 'Use current reference range', () => {
+    const ref = videos.find(r => r.id === $('referenceSelect').value);
+    if (chosen.sound && !ref?.has_audio) return alert('Sound requires an audible video.');
+    comparison.reference_id = ref.id; comparison.start = numberValue('refStart'); comparison.end = numberValue('refEnd');
+    refSelect.value = ref.id; start.value = comparison.start ?? ''; end.value = comparison.end ?? '';
+  });
+  field(box, 'Human-written comparison', comparison, 'detail', 'textarea');
+  button(box, 'Apply my comparison to selected criteria', () => apply('comparison', comparison, 'I confirm this comparison truthfully applies to all selected criteria.'));
+  node('h3', 'Status for selected criteria', box);
+  const status = {status:'unknown'}; field(box, 'Status', status, 'status', 'text', ['unknown', 'pass', 'fail']);
+  button(box, 'Apply selected status', () => apply('status', status, 'I confirm this status is my review decision for all selected criteria.'));
+}
+function updateProgress() {
+  const missing = missingFields();
+  let complete = 0;
+  review.shots.forEach((s, i) => {
+    const keys = Object.keys(s.checks), count = keys.filter(k => !missing.some(m => m.startsWith(s.id + ' ' + k + ':'))).length;
+    if (count === keys.length) complete++;
+    $('shotSelect').children[i].textContent = `${s.id} · ${count}/${keys.length} complete`;
+  });
+  const state = prefix => missing.some(m => m.startsWith(prefix + ':')) ? 'incomplete' : 'complete';
+  $('progress').textContent = `Candidate full playback: ${state('full')} · ${review.baseline_comparisons.map(b => b.reference_id + ': ' + state('baseline-' + b.reference_id)).join(' · ')} · Shots completed ${complete}/${shots.length} · Blockers ${review.blocking_issues.length}. Completeness guidance only; native verifier is authoritative.`;
 }
 function selectShot(index) {
   shotIndex = index; const shot = shots[index]; $('shotSelect').value = index;
@@ -130,9 +199,9 @@ function drawForm() {
 // Form completeness only. Never claims to duplicate or replace native verification.
 function missingFields() {
   const missing = [], add = (test, label) => { if (!test) missing.push(label); };
-  const obs = (items, start, end, required, label) => {
+  const obs = (items, start, end, required, label, allowed = [required]) => {
     add(items.length > 0, label + ': add an observation');
-    items.forEach(o => { add(Number.isFinite(o.time) && o.time >= start && o.time <= end, label + ': observation timestamp'); add(o.detail.trim(), label + ': observation detail'); add(o.evidence_ids.length, label + ': evidence IDs'); });
+    items.forEach(o => { add(Number.isFinite(o.time) && o.time >= start && o.time <= end, label + ': observation timestamp'); add(concreteDetail(o.detail), label + ': observation detail'); add(o.evidence_ids.length && o.evidence_ids.every(id => allowed.includes(id)), label + ': evidence IDs'); });
     add(items.some(o => o.evidence_ids.includes(required)), label + ': cite ' + required);
   };
   add(review.reviewer.id.trim() && review.reviewer.id !== review.author_id, 'reviewer: distinct reviewer ID'); add(review.reviewer.method.trim(), 'reviewer: actual method'); add(review.reviewer.independent, 'reviewer: independence declaration');
@@ -143,9 +212,9 @@ function missingFields() {
   obs(review.full_playback.observations, 0, PACK.evidence.scope.end, 'source-video', 'full');
   for (const b of review.baseline_comparisons) { add(validInterval(b.start, b.end, videos.find(r => r.id === b.reference_id)?.duration), 'baseline-' + b.reference_id + ': reviewed interval'); obs(b.observations, b.start, b.end, b.reference_id, 'baseline-' + b.reference_id); }
   review.shots.forEach((s, i) => Object.entries(s.checks).forEach(([key, c]) => {
-    const label = s.id + ' ' + key; add(c.status !== 'unknown', label + ': status'); obs(c.observations, shots[i].start, shots[i].end, s.id + '-continuous', label);
+    const label = s.id + ' ' + key; add(['pass', 'fail', ...(review.capability.mode === 'limited' && !['typography_captions','timing_pacing','sound'].includes(key) ? ['unmet'] : [])].includes(c.status), label + ': status'); obs(c.observations, shots[i].start, shots[i].end, s.id + '-continuous', label, ['source-video', ...PACK.artifacts.filter(a => a.shot === s.id).map(a => a.id)]);
     if (!['typography_captions', 'timing_pacing'].includes(key)) add(c.comparisons.length, label + ': reference comparison');
-    c.comparisons.forEach(cc => { const ref = videos.find(r => r.id === cc.reference_id); add(ref && validInterval(cc.start, cc.end, ref.duration), label + ': reference interval'); add(cc.detail.trim(), label + ': comparison detail'); if (key === 'sound') add(ref?.has_audio, label + ': audible reference'); });
+    c.comparisons.forEach(cc => { const ref = videos.find(r => r.id === cc.reference_id); add(ref && validInterval(cc.start, cc.end, ref.duration), label + ': reference interval'); add(concreteDetail(cc.detail), label + ': comparison detail'); if (key === 'sound') add(ref?.has_audio, label + ': audible reference'); });
   })); return missing;
 }
 function navigateError(message) {
@@ -175,8 +244,18 @@ $('loadDraft').onchange = async event => {
     const candidate = JSON.parse(await event.target.files[0].text());
     for (const k of ['schema', 'style', 'author_id', 'capability', 'video_sha256', 'evidence_sha256', 'limits']) if (JSON.stringify(candidate[k]) !== JSON.stringify(PACK.template[k])) throw Error('Draft binding mismatch: ' + k);
     if (JSON.stringify(candidate.shots.map(s => [s.id, Object.keys(s.checks)])) !== JSON.stringify(PACK.template.shots.map(s => [s.id, Object.keys(s.checks)]))) throw Error('Draft shot/criteria mismatch');
-    review = candidate; drawForm(); showErrors([]);
+    review = candidate; drawForm(); updateProgress(); showErrors([]);
   } catch (error) { showErrors([error.message]); }
 };
 $('validation').onchange = async event => { try { const report = JSON.parse(await event.target.files[0].text()); showErrors([report.ok ? 'Native validation passed for review SHA256 ' + report.review_sha256 + '. This is not native approval.' : report.error]); if (!report.ok) navigateError(report.error); } catch (error) { showErrors([error.message]); } };
 selectReference(videos.find(r => r.required_comparison)?.id || videos[0].id); selectShot(0); drawForm();
+for (const ref of PACK.references.filter(r => r.kind === 'image')) {
+  const box = node('details', '', $('referenceBoards')); node('summary', ref.id + ' — still reference only', box);
+  const img = node('img', '', box); img.src = ref.url; img.alt = ref.id; img.style = 'max-width:100%';
+}
+
+function concreteDetail(value) { return typeof value === 'string' && !!value.trim() && !/^(?:pass|passed|ok|okay|good|fine|checked|done|n\/?a|unknown|none|通过|正常|已检查|合格|无|没有)[.!。！\s]*$/iu.test(value.trim()); }
+document.body.addEventListener('input', updateProgress);
+document.body.addEventListener('change', updateProgress);
+document.body.addEventListener('click', () => queueMicrotask(updateProgress));
+updateProgress();
