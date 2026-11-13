@@ -23,6 +23,7 @@ preserve upstream preview/approval/render ownership. Technical tests are not cre
 approval or permission for paid generation.
 
 For QTx Unity production, follow docs/qtx/PRODUCTION-MVP.md and use qtx/produce.mjs.
+Apply skills/qtx-natural-narration/SKILL.md to the factual draft, read it aloud and audit the Series voice. After script approval, prepare exact thought blocks for long-form synthesis as described in the production contract.
 Author plan.md, exact spoken script.md and visual-plan.md; stop for explicit human
 approval before recording approve-plan or making provider calls. Check fingerprints,
 reuse matching outputs and never automatically retry a paid call. Actual narration

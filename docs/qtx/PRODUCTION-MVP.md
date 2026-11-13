@@ -12,6 +12,7 @@ target 90 seconds, English, using the Series style.” Codex runs the commands b
 the user need not operate the internal tools manually.
 
 1. Read Series bible/config, current brief/metadata and relevant shared inventory.
+   Read the Series narration profile, research the facts and write a factual draft. Apply the [Natural Narration skill](../../skills/qtx-natural-narration/SKILL.md), read aloud and audit the Series voice before submitting for approval.
    Write `plan.md`, exact narration in `script.md` (no headings/stage directions),
    and `visual-plan.md`. `produce.mjs plan SERIES EPISODE` reports that context.
 2. Present those files and stop for explicit human approval. Only after approval,
@@ -34,6 +35,28 @@ the user need not operate the internal tools manually.
 Command prefix: `node qtx/produce.mjs COMMAND SERIES EPISODE`. For local `.env`
 configuration, use Node 20.12+ / 22: `node --env-file=.env qtx/produce.mjs ...`.
 Environment variables inherited from the shell also work. Never print credentials.
+
+## Series narration profile
+
+Keep optional creative guidance in the Series bible or a short supplement. Include whichever details help the writer hear the narrator: audience, personality, formality, energy, humor, technical density, vocabulary, explanation style or preferred pace. [Computing Clearly](narration/computing-clearly.md) uses calm, curious, slightly informal explanations and concrete examples for an intelligent beginner. Its relaxed 145–155 WPM range is a planning aid. Listen for rushed or dragging passages in context. Each Series can choose its own pace, and listening judgment governs acceptance. For a new voice, use the [calibration contract](narration/VOICE-CALIBRATION.md).
+
+## Long-form narration after approval
+
+Codex reads the approved `script.md` and chooses coherent thought boundaries: an explanation, example, question and answer, or transition. Keep connected sentences together as needed. Sentence, word and character counts do not determine a cut. Prepare episode-local `audio/narration-blocks.json`. This is an authoring contract for future block synthesis. The existing P05 `voice` command still sends one complete script and does not consume this file.
+
+```json
+{
+  "schema": "qtx-narration-blocks-v1",
+  "blocks": [
+    {"id":"beat-01","text":"What changed? The light went out.\n\n","previous_text":null,"next_text":"Listen for the click."},
+    {"id":"beat-02","text":"Listen for the click.","previous_text":"What changed? The light went out.\n\n","next_text":null}
+  ]
+}
+```
+
+Before synthesis, join decoded `text` values in array order with an empty separator and compare the UTF-8 bytes with the fingerprinted script. Preserve boundary whitespace, punctuation and the final newline exactly. Stop on a mismatch and correct the blocks. Check each context field against its immediate neighbor's exact text, using null at either end. Only `text` is spoken. Use neighboring context where supported, or compatible request-ID continuity for adjacent takes. Continue to require approval before spending and reuse matching outputs.
+
+Use actual audio duration and provider alignment on the assembled timeline for captions, then scenes and final video duration. WPM and word count serve only as planning estimates.
 
 ## Approval and preservation
 

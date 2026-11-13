@@ -10,7 +10,7 @@ A was cut from the original full P05 narration. B was synthesized alone. Neighbo
 
 The [prepared input](n02-b2.json) contains the exact 72-word reading. The tap, the appearance of the forecast and the question each have a breath. Let “forecast” land in the answer before naming the request. The short action sentence keeps B's second use case without repeating its “for asking” construction. At the counter, “where to go and what details to give” is an intentional pair. The longest line turns back to the app, with a breath after “rules” and the stress on “answer.” The following location and day supply concrete request details. No recap or hesitation is needed.
 
-Shorter opening units give the question room. The longer closing sentence should keep the delivery connected. At the Series preference of 145–155 wpm, allow about 28–30 seconds. Actual pace and pauses await audio.
+Shorter opening units give the question room. The longer closing sentence should keep the delivery connected. At the Series preference of 145–155 wpm, allow about 28–30 seconds. This was the pre-listening estimate.
 
 ## Listening sequence
 
@@ -18,4 +18,8 @@ Shorter opening units give the question room. The longer closing sentence should
 2. **Model.** Only if Test 1 is accepted, compare `eleven_multilingual_v2` with `eleven_v4` using the exact accepted B2 text, equivalent context and the same voice where supported. Check compatibility before running the comparison. Use no audio tags.
 3. **Direction.** Only if v4 is preferred, try one sparse cue, such as “curious” on the question or “relaxed” on the answer. Compare with the undirected v4 take.
 
-N02 prepares Test 1 for approval. No generation took place.
+## Accepted listening result
+
+N01 and N02 passed. The human ranking was **contextual B2 > B > A**. At approximately 148 WPM, B2 sounded more relaxed. Explicit actors and actions made the event clear before the technical term arrived. Removing the repeated grammatical construction and giving thoughts audible boundaries made the explanation easier to follow. The listener preferred the contextual production-style read. Wording and context changed together, so this comparison measures their combined effect.
+
+Benchmark voice `DODLEQrClDo8wCz460ld`, model `eleven_multilingual_v2`. Retain the recording as listening evidence. Future episodes use the revision and listening process with their own subject, Series and voice.
