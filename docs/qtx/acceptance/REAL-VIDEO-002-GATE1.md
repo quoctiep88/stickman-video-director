@@ -18,11 +18,11 @@ Speech estimate 6.6–7.0 minutes at 145–155 WPM; roughly 7–8 with breathing
 
 Checks PASS: production.mjs episode check (including shared promotion ownership), Natural Narration skill quick_validate.py, file resolution/count/11 beats, verbatim guidance snapshot, git diff --check. Episode 001 file inventory/sizes/mtimes unchanged (no prior render inspection); shared and Series bible/config SHA256 unchanged. No qtx/P05 code or historical N01–N05 evidence changed. No paid calls, generated assets, narration blocks, render/preview or approval record.
 
-Gate 1 fingerprint: `cec2f2d276fdb723f3359dbf6ae992ee92c594853831ad635140369641a1fdb4`.
+Gate 1 fingerprint: `dda3a74a25252c3718f5435b1e3bc09097f000bc17dba54a7d1e8db87d7a095f`.
 
 Exact bound inputs (paths relative to the episode or Series as prefixed):
 
-- `episode/plan.md`: `60ab192cde59ecb6fb5429d836576ad20c817e000802cdc4360cd99b9506d36e`
+- `episode/plan.md`: `7b3f7d3aeaf65de1052f1dab9d416f38e3db0f6ec0013e563c19bd646970d02e`
 - `episode/script.md`: `f3ad38992d6e565d15908ecf19bcde693a7c7eac6aa5439509f6c78b5a2fb485`
 - `episode/visual-plan.md`: `79fc29870f98729f0638aa32f5d29157445b55b96c70f2fe1e2fb9f98d6167dc`
 - `episode/brief.md`: `1b0c169212c689be7f21e9368590982de77abcbc09688e52a089b4567630a286`
@@ -33,4 +33,6 @@ Exact bound inputs (paths relative to the episode or Series as prefixed):
 
 `series/shared` binds the entire tree, including technical-host character.json/head.png/torso.png/arm.png/leg.png and empty shared categories. The current narration supplement is bound through its verbatim plan.md snapshot; relevant visual guidance is in SERIES.md and visual-plan.md. This fingerprint is a review candidate, not an approval. Do not run approve-plan until explicit human approval. Provider calls = 0.
 
-Next: Await human Gate 1 approval for Real Video #2.
+Source maintenance (2026-11-13): current TLS authority in plan.md updated from RFC 8446 to [RFC 9846](https://www.rfc-editor.org/rfc/rfc9846.html), including authentication section §4.5. RFC 9846 obsoletes RFC 8446 and retains TLS 1.3 as a backward-compatible minor update (§1.2). Creative package editorially approved; production approval awaits the refreshed fingerprint. Brief/script/visual-plan/video.json and all Series/shared input hashes are unchanged; script remains 1,016 words and 11 scenes. Provider calls = 0. Only plan.md and derived fingerprint/report fields changed locally.
+
+Next: Await human Gate 1 approval for Real Video #2 production.
