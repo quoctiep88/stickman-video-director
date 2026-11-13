@@ -1,6 +1,6 @@
 # QTx status
 
-- **N05 BLOCKED at live metadata preflight.** eleven_v4 advertises TTS but serves_pro_voices=false; professional Lauren metadata nevertheless lists v4 as fine_tuned. Compatibility unresolved; zero synthesis calls. See [N05 evidence](narration/N05.md). Resolve provider metadata and endpoint capabilities before fingerprinted spending approval.
+- **N05 preflight PASS; candidate delivered, human listening pending.** Provider metadata inconsistency documented; explicitly approved one Lauren eleven_v4 call succeeded without overrides/retries. V2 45.279 s / 145.76 WPM; v4 39.920 s / 165.33 WPM. Exact alignment text and full decode pass; v4 alignment overruns audio by 80 ms at final word “time”, requiring listening verification. See [N05 evidence](narration/N05.md). No further synthesis; await human model decision.
 - **N04 CLOSED PASS (human decision supplied).** Computing Clearly: Lauren APPROVED (~146 WPM, natural conversational delivery and breathing room); George LIMITED (~186 WPM, tighter thought spacing), not universally rejected. N01/N02/N03 PASS; contextual B2 > B > A. No universal narration rule change. Future episodes follow the [production contract](PRODUCTION-MVP.md) and [new-voice calibration](narration/VOICE-CALIBRATION.md).
 
 - **P05 CLOSED PASS — first QTx production MVP complete.** P00–P04 remain closed. No post-MVP phase authorized.
