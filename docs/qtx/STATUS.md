@@ -1,6 +1,7 @@
 # QTx status
 
-- **N03 general narration contract delivered.** N01/N02 passed. Human listening ranked contextual B2 > B > A (B2 about 148 WPM). Future episodes follow the [production contract](PRODUCTION-MVP.md) and [new-voice calibration](narration/VOICE-CALIBRATION.md). N03 provider calls: zero. Cross-voice and model validation await a decision.
+- **N05 BLOCKED at live metadata preflight.** eleven_v4 advertises TTS but serves_pro_voices=false; professional Lauren metadata nevertheless lists v4 as fine_tuned. Compatibility unresolved; zero synthesis calls. See [N05 evidence](narration/N05.md). Resolve provider metadata and endpoint capabilities before fingerprinted spending approval.
+- **N04 CLOSED PASS (human decision supplied).** Computing Clearly: Lauren APPROVED (~146 WPM, natural conversational delivery and breathing room); George LIMITED (~186 WPM, tighter thought spacing), not universally rejected. N01/N02/N03 PASS; contextual B2 > B > A. No universal narration rule change. Future episodes follow the [production contract](PRODUCTION-MVP.md) and [new-voice calibration](narration/VOICE-CALIBRATION.md).
 
 - **P05 CLOSED PASS — first QTx production MVP complete.** P00–P04 remain closed. No post-MVP phase authorized.
 - Phase starting SHA: fb75826e6c0b1fa0f02d750ae1305be564d1b40e. Main; QTx origin https://github.com/quoctiep88/stickman-video-director.git. Commits: 64aee5c planning, 6e81611 production CLI, 9217565 real preview, followed by closure docs. Resolve final SHA and remote equality with git rev-parse HEAD / origin/main.
